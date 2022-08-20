@@ -1,4 +1,18 @@
-export const vorsilben = [
+import { uuid } from "uuidv4";
+import { Name } from "./useFavoriteNames";
+
+export default function generateNewName() {
+  const vorsilbe = vorsilben[Math.floor(Math.random() * vorsilben.length)];
+  const nachsilbe = nachsilben[Math.floor(Math.random() * nachsilben.length)];
+  const newName: Name = {
+    vorsilbe: vorsilbe,
+    nachsilbe: nachsilbe,
+    id: uuid(),
+  };
+  return newName;
+}
+
+const vorsilben = [
   "Aal",
   "Aar",
   "Abalonen",
@@ -201,7 +215,6 @@ export const vorsilben = [
   "Feucht",
   "Feuer",
   "Fichten",
-  ,
   "Finken",
   "Finster",
   "Finsternis",
@@ -464,7 +477,6 @@ export const vorsilben = [
   "Marmor",
   "Maronen",
   "Masken",
-  ,
   "Mate",
   "Matsch",
   "Maulbeer",
@@ -857,7 +869,7 @@ export const vorsilben = [
   "Zyklon",
   "Zypressen",
 ];
-export const nachsilben = [
+const nachsilben = [
   "auge",
   "bär",
   "bart",
