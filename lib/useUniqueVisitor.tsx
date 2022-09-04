@@ -10,11 +10,11 @@ export default function useUniqueVisitor() {
 
     if (visitorIdLocalStorage) {
       setVisitorId(visitorIdLocalStorage);
-      log.info("return visitor: ", visitorIdLocalStorage);
+      log.info("return visitor: ", { visitorId: visitorIdLocalStorage });
     } else {
       const visitorId = uuidv4();
       localStorage.setItem("visitor-id", visitorId);
-      log.info("new user visited site", visitorId);
+      log.info("new user visited site", { visitorId: visitorId });
     }
   }, []);
 

@@ -108,7 +108,7 @@ function NewNameButton({
           );
           log.info("new name was generated", {
             user: visitorId,
-            namw: newName,
+            name: newName,
           });
           setGeneratedName(newName);
         }}
