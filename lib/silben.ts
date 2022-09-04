@@ -541,7 +541,7 @@ export const vorsilben = [
   "Nord",
   "Nuss",
   "Oasen",
-  "Obisidian",
+  "Obsidian",
   "Ochsen",
   "Ocker",
   "Oleander",
