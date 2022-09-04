@@ -12,7 +12,7 @@ export default function Home() {
   const [selectedNachsilben, setSelectedNachsilben] = useState<Nachsilbe[]>([]);
 
   return (
-    <div className="bg-slate-600 text-slate-100 flex flex-col items-center">
+    <div className="text-slate-100 flex flex-col items-center">
       <h1 className="font-bold text-4xl text-center drop-shadow-xl mb-1 p-4 underline">
         Warrior Cats Namensgenerator!
       </h1>
