@@ -1,9 +1,28 @@
 import { v4 as uuidv4 } from "uuid";
 import { Name } from "./useFavoriteNames";
+import { Nachsilbe, Vorsilbe } from "./useSelectedSilben";
 
-export default function generateNewName() {
-  const vorsilbe = vorsilben[Math.floor(Math.random() * vorsilben.length)];
-  const nachsilbe = nachsilben[Math.floor(Math.random() * nachsilben.length)];
+export default function generateNewName(
+  vorsilbenPref: Vorsilbe[],
+  nachsilbenPref: Nachsilbe[]
+) {
+  let vorsilbe;
+  if (vorsilbenPref.length > 0) {
+    vorsilbe =
+      vorsilbenPref[Math.floor(Math.random() * vorsilbenPref.length)].vorsilbe;
+  } else {
+    vorsilbe = vorsilben[Math.floor(Math.random() * vorsilben.length)];
+  }
+
+  let nachsilbe;
+  if (nachsilbenPref.length > 0) {
+    nachsilbe =
+      nachsilbenPref[Math.floor(Math.random() * nachsilbenPref.length)]
+        .nachsilbe;
+  } else {
+    nachsilbe = nachsilben[Math.floor(Math.random() * nachsilben.length)];
+  }
+
   const newName: Name = {
     vorsilbe: vorsilbe,
     nachsilbe: nachsilbe,
@@ -869,7 +888,8 @@ export const vorsilben = [
   "Zyklon",
   "Zypressen",
 ];
-const nachsilben = [
+
+export const nachsilben = [
   "auge",
   "bär",
   "bart",

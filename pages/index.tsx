@@ -1,11 +1,15 @@
-import React from "react";
-import generateNewName from "../lib/silben";
+import React, { useState } from "react";
+import generateNewName, { vorsilben } from "../lib/silben";
 import { useFavoriteNames, Name } from "../lib/useFavoriteNames";
 import { useLastName } from "../lib/useLastName";
 import Image from "next/image";
+import SilbenAuswahl from "../components/VorsilbenAuswahl";
+import { Nachsilbe, Vorsilbe } from "../lib/useSelectedSilben";
 
 export default function Home() {
   const [generatedName, setGeneratedName] = useLastName();
+  const [selectedVorsilben, setSelectedVorsilben] = useState<Vorsilbe[]>([]);
+  const [selectedNachsilben, setSelectedNachsilben] = useState<Nachsilbe[]>([]);
 
   return (
     <div className="bg-slate-600 text-slate-100 flex flex-col items-center">
@@ -16,7 +20,15 @@ export default function Home() {
       <p className="font-bold text-xl drop-shadow-sm bg-slate-700 rounded-xl w-fit p-2">
         {generatedName ? generatedName.vorsilbe + generatedName.nachsilbe : ""}
       </p>
-      <NewNameButton setGeneratedName={setGeneratedName} />
+      <NewNameButton
+        setGeneratedName={setGeneratedName}
+        selectedVorsilben={selectedVorsilben}
+        selectedNachsilben={selectedNachsilben}
+      />
+      <SilbenAuswahl
+        setParentVorsilben={setSelectedVorsilben}
+        setParentNachsilben={setSelectedNachsilben}
+      />
       <NameList currentName={generatedName} />
     </div>
   );
@@ -72,15 +84,22 @@ function NameList({ currentName }: { currentName: Name | undefined }) {
 
 function NewNameButton({
   setGeneratedName,
+  selectedVorsilben,
+  selectedNachsilben,
 }: {
   setGeneratedName: (name: Name) => void;
+  selectedVorsilben: Vorsilbe[];
+  selectedNachsilben: Nachsilbe[];
 }) {
   return (
     <div className="mt-1">
       <button
         className="text-center mt-0 mr-auto"
         onClick={() => {
-          const newName = generateNewName();
+          const newName = generateNewName(
+            selectedVorsilben,
+            selectedNachsilben
+          );
           setGeneratedName(newName);
         }}
       >
