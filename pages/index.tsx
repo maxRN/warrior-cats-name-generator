@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import generateNewName, { vorsilben } from "../lib/silben";
+import generateNewName from "../lib/silben";
 import { useFavoriteNames, Name } from "../lib/useFavoriteNames";
 import { useLastName } from "../lib/useLastName";
 import Image from "next/image";
 import SilbenAuswahl from "../components/VorsilbenAuswahl";
 import { Nachsilbe, Vorsilbe } from "../lib/useSelectedSilben";
+import { log } from "next-axiom";
+import useUniqueVisitor from "../lib/useUniqueVisitor";
 
 export default function Home() {
   const [generatedName, setGeneratedName] = useLastName();
   const [selectedVorsilben, setSelectedVorsilben] = useState<Vorsilbe[]>([]);
   const [selectedNachsilben, setSelectedNachsilben] = useState<Nachsilbe[]>([]);
+  const visitorId = useUniqueVisitor();
 
   return (
     <div className="text-slate-100 flex flex-col items-center">
@@ -24,6 +27,7 @@ export default function Home() {
         setGeneratedName={setGeneratedName}
         selectedVorsilben={selectedVorsilben}
         selectedNachsilben={selectedNachsilben}
+        visitorId={visitorId}
       />
       <SilbenAuswahl
         setParentVorsilben={setSelectedVorsilben}
@@ -86,10 +90,12 @@ function NewNameButton({
   setGeneratedName,
   selectedVorsilben,
   selectedNachsilben,
+  visitorId,
 }: {
   setGeneratedName: (name: Name) => void;
   selectedVorsilben: Vorsilbe[];
   selectedNachsilben: Nachsilbe[];
+  visitorId: string;
 }) {
   return (
     <div className="mt-1">
@@ -100,6 +106,10 @@ function NewNameButton({
             selectedVorsilben,
             selectedNachsilben
           );
+          log.info("new name was generated", {
+            user: visitorId,
+            namw: newName,
+          });
           setGeneratedName(newName);
         }}
       >
