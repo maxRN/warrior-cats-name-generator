@@ -6,7 +6,11 @@ export interface Name {
   id: string;
 }
 
-export function useFavoriteNames(): [Name[], (name: Name) => void] {
+export function useFavoriteNames(): [
+  Name[],
+  (name: Name) => void,
+  (id: string) => void
+] {
   const [names, setNames] = useState<Name[]>([]);
 
   useEffect(() => {
@@ -18,15 +22,21 @@ export function useFavoriteNames(): [Name[], (name: Name) => void] {
     setNames(favNamesLS);
   }, []);
 
-  useEffect(() => console.log(names), [names]);
-
   function addFavName(newName: Name) {
     if (names.find((name: Name) => name.id === newName.id)) {
       return;
     }
+
     const newNames = [...names, newName];
-    setNames((names) => newNames);
-    localStorage.setItem("favorite-names", JSON.stringify(newNames));
+    setNames(newNames);
+    localStorage?.setItem("favorite-names", JSON.stringify(newNames));
   }
-  return [names, addFavName];
+
+  function removeName(id: string) {
+    const namesWithout = names.filter((name: Name) => name.id !== id);
+    setNames([...namesWithout]);
+    localStorage?.setItem("favorite-names", JSON.stringify(namesWithout));
+  }
+
+  return [names, addFavName, removeName];
 }

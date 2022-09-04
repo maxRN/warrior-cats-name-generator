@@ -1,4 +1,4 @@
-import { uuid } from "uuidv4";
+import { v4 as uuidv4 } from "uuid";
 import { Name } from "./useFavoriteNames";
 
 export default function generateNewName() {
@@ -7,12 +7,12 @@ export default function generateNewName() {
   const newName: Name = {
     vorsilbe: vorsilbe,
     nachsilbe: nachsilbe,
-    id: uuid(),
+    id: uuidv4(),
   };
   return newName;
 }
 
-const vorsilben = [
+export const vorsilben = [
   "Aal",
   "Aar",
   "Abalonen",
