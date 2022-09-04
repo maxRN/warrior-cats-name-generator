@@ -49,17 +49,17 @@ function NameList({ currentName }: { currentName: Name | undefined }) {
   }
 
   return (
-    <div className="mt-2">
+    <div className="mt-2 ">
       <div className="text-center m-1">
         <button onClickCapture={() => saveName()}>Name speichern</button>
       </div>
-      <div>
+      <div className="">
         <ul>
           {favoriteNames.map((name: Name) => (
             <li key={name.id}>
               {name.vorsilbe + name.nachsilbe}
               <button
-                className="w-1/6 "
+                className="w-6 h-6"
                 onClickCapture={() => removeName(name.id)}
               >
                 {/* trash can icon */}
@@ -69,7 +69,6 @@ function NameList({ currentName }: { currentName: Name | undefined }) {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6"
                 >
                   <path
                     strokeLinecap="round"
