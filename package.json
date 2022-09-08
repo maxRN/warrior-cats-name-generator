@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^1.0.0-beta.3",
     "next": "12.2.5",
     "next-axiom": "^0.14.0",
     "react": "18.2.0",

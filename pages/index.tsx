@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import generateNewName from "../lib/silben";
 import { useFavoriteNames, Name } from "../lib/useFavoriteNames";
 import { useLastName } from "../lib/useLastName";
-import Image from "next/image";
 import SilbenAuswahl from "../components/VorsilbenAuswahl";
 import { Nachsilbe, Vorsilbe } from "../lib/useSelectedSilben";
 import { log } from "next-axiom";
 import useUniqueVisitor from "../lib/useUniqueVisitor";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 export default function Home() {
   const [generatedName, setGeneratedName] = useLastName();
@@ -40,6 +40,7 @@ export default function Home() {
 
 function NameList({ currentName }: { currentName: Name | undefined }) {
   const [favoriteNames, addFavoriteName, removeName] = useFavoriteNames();
+  const [parent] = useAutoAnimate<HTMLUListElement>();
 
   function saveName() {
     if (currentName) {
@@ -51,10 +52,15 @@ function NameList({ currentName }: { currentName: Name | undefined }) {
   return (
     <div className="mt-2 ">
       <div className="text-center m-1">
-        <button onClickCapture={() => saveName()}>Name speichern</button>
+        <button
+          className="bg-slate-800 rounded-lg p-1 duration-300 hover:border-slate-300 border-2 m-4 border-transparent transition-all"
+          onClickCapture={() => saveName()}
+        >
+          Name speichern
+        </button>
       </div>
-      <div className="">
-        <ul>
+      <div className="mt-1">
+        <ul ref={parent}>
           {favoriteNames.map((name: Name) => (
             <li key={name.id}>
               {name.vorsilbe + name.nachsilbe}
@@ -97,9 +103,9 @@ function NewNameButton({
   visitorId: string;
 }) {
   return (
-    <div className="mt-1">
+    <div className="mt-4 w-[120] h-[120px]">
       <button
-        className="text-center mt-0 mr-auto"
+        className="text-center w-[100px] h-[100px] hover:w-[120px] mt-0 mr-auto transition-all"
         onClick={() => {
           const newName = generateNewName(
             selectedVorsilben,
@@ -112,12 +118,7 @@ function NewNameButton({
           setGeneratedName(newName);
         }}
       >
-        <Image
-          width="100px"
-          height="100px"
-          src="/cat.svg"
-          alt="Google Noto emoji of a grinning cat."
-        />
+        <img src="/cat.svg" alt="Google Noto emoji of a grinning cat." />
       </button>
     </div>
   );
