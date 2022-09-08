@@ -102,10 +102,14 @@ function NewNameButton({
   selectedNachsilben: Nachsilbe[];
   visitorId: string;
 }) {
+  const [wiggleButton, setWiggleButton] = useState(false);
+
   return (
     <div className="mt-4 w-[120] h-[120px]">
       <button
-        className="text-center w-[100px] h-[100px] hover:w-[120px] mt-0 mr-auto transition-all"
+        className={`${
+          wiggleButton && "animate-wiggle"
+        } text-center w-[100px] h-[100px] hover:w-[120px] mt-0 mr-auto transition-all `}
         onClick={() => {
           const newName = generateNewName(
             selectedVorsilben,
@@ -115,8 +119,10 @@ function NewNameButton({
             user: visitorId,
             name: newName,
           });
+          setWiggleButton(true);
           setGeneratedName(newName);
         }}
+        onAnimationEnd={() => setWiggleButton(false)}
       >
         <img src="/cat.svg" alt="Google Noto emoji of a grinning cat." />
       </button>
