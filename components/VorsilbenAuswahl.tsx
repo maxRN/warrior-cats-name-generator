@@ -73,9 +73,9 @@ export default function SilbenAuswahl({
   }
 
   return (
-    <div className="flex flow-row text-slate-800">
+    <div className="grid grid-rows-1 grid-cols-1 w-80 text-slate-800">
       <Select
-        className=""
+        className="m-1"
         options={vorsilbenOptions}
         onChange={handleVorsilbenChange}
         value={selectedVorsilbenOptions}
@@ -86,7 +86,7 @@ export default function SilbenAuswahl({
       />
 
       <Select
-        className=""
+        className="m-1 rounded-xl"
         options={nachsilbenOptions}
         onChange={handleNachsilbenChange}
         value={selectedNachsilbenOptions}
@@ -95,6 +95,13 @@ export default function SilbenAuswahl({
         isSearchable
         placeholder="Nachsilben"
       />
+      <div className="bg-slate-300 rounded-lg p-1 w-auto m-2">
+        <details className="">
+          <summary>Was sind das für Dropdownlisten?</summary>
+          Hier könnt ihr auswählen ob ihr nur Namen mit bestimmten Vorsilben
+          und/oder Nachsilben angezeigt bekommen wollt.
+        </details>
+      </div>
     </div>
   );
 }
