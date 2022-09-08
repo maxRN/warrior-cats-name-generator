@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { log } from "next-axiom";
 
 export interface Name {
   vorsilbe: string;
@@ -27,6 +28,12 @@ export function useFavoriteNames(): [
       return;
     }
 
+    log.info("new favorite name", {
+      user: localStorage?.getItem("visitor-id"),
+      vorsilbe: newName.vorsilbe,
+      nachsilbe: newName.nachsilbe,
+    });
+
     const newNames = [...names, newName];
     setNames(newNames);
     localStorage?.setItem("favorite-names", JSON.stringify(newNames));
@@ -34,6 +41,16 @@ export function useFavoriteNames(): [
 
   function removeName(id: string) {
     const namesWithout = names.filter((name: Name) => name.id !== id);
+
+    const deletedName = names.find((name: Name) => name.id === id);
+    if (deletedName) {
+      log.info("deleted favorite name", {
+        user: localStorage?.getItem("visitor-id"),
+        vorsilbe: deletedName.vorsilbe,
+        nachsilbe: deletedName.nachsilbe,
+      });
+    }
+
     setNames([...namesWithout]);
     localStorage?.setItem("favorite-names", JSON.stringify(namesWithout));
   }
